@@ -1,0 +1,41 @@
+{
+  "name": "cordova-plugin-htmloverlay",
+  "version": "1.0.0",
+  "description": "Cordova HTML Overlay Plugin",
+  "keywords": [
+    "cordova",
+    "plugin",
+    "html overlay"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/curbngo/cordova-plugin-htmloverlay.git"
+  },
+  "bugs": {
+    "url": "https://github.com/curbngo/cordova-plugin-htmloverlay/issues"
+  },
+  "homepage": "https://github.com/curbngo/cordova-plugin-htmloverlay",
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com",
+    "url": "https://yourwebsite.com"
+  },
+  "cordova": {
+    "id": "cordova-plugin-htmloverlay",
+    "platforms": [
+      "android"
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cordova",
+    "plugin",
+    "html overlay"
+  ],
+  "dependencies": {
+    "cordova-plugin-whitelist": "^1.3.5"
+  }
+}

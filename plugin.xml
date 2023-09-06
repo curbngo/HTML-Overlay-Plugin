@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-htmloverlay"
+        version="1.0.0">
+    <name>Cordova HTML Overlay</name>
+    <description>An HTML overlay plugin for Cordova.</description>
+    <license>MIT</license>
+    
+  <engines>
+      <engine name="cordova" version=">=3.4.0"/>
+  </engines>
+
+  <asset src="www/CordovaHTMLOverlay.js" target="js/CordovaHTMLOverlay.js"/>
+
+  <js-module src="www/CordovaHTMLOverlay.js" name="CordovaHTMLOverlay">
+      <clobbers target="CordovaHTMLOverlay" />
+  </js-module>
+  
+  <!-- android -->
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="CordovaHTMLOverlay">
+        <param name="android-package" value="com.curbngo.htmloverlay.CordovaHTMLOverlay"/>
+      </feature>
+    </config-file>
+
+    <source-file src="src/android/CordovaHTMLOverlay.java" target-dir="src/com/curbngo/htmloverlay" />
+    
+  </platform>
+  
+</plugin>
