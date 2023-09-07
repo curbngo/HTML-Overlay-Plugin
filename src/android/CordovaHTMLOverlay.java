@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class CordovaHTMLOverlay extends CordovaPlugin {
 
@@ -23,8 +24,7 @@ public class CordovaHTMLOverlay extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("show")) {
             htmlStr = args.getString(0);
-            showOverlay();
-            callbackContext.success();
+            showOverlay(callbackContext);
             return true;
         } else if (action.equals("hide")) {
             hideOverlay();
@@ -34,7 +34,7 @@ public class CordovaHTMLOverlay extends CordovaPlugin {
         return false;
     }
 
-    private void showOverlay() {
+    private void showOverlay(final CallbackContext callbackContext) {
         final Context context = cordova.getActivity().getApplicationContext();
         final ViewGroup rootView = cordova.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
 
@@ -46,13 +46,20 @@ public class CordovaHTMLOverlay extends CordovaPlugin {
                     overlayWebView.setLayoutParams(new ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     rootView.addView(overlayWebView);
+    
+                    overlayWebView.setWebViewClient(new WebViewClient() {
+                        @Override
+                        public void onPageFinished(WebView view, String url) {
+                            // Page has finished loading, make the overlay visible
+                            overlayWebView.setVisibility(View.VISIBLE);
+                            callbackContext.success();
+                        }
+                    });
+    
+                    WebSettings webSettings = overlayWebView.getSettings();
+                    webSettings.setJavaScriptEnabled(true);
                 }
-
-                WebSettings webSettings = overlayWebView.getSettings();
-                webSettings.setJavaScriptEnabled(true);
-
                 overlayWebView.loadDataWithBaseURL(null, htmlStr, "text/html", "utf-8", null);
-                overlayWebView.setVisibility(View.VISIBLE);
             }
         });
     }
