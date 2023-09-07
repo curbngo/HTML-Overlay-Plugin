@@ -45,7 +45,6 @@ public class CordovaHTMLOverlay extends CordovaPlugin {
                     overlayWebView = new WebView(context);
                     overlayWebView.setLayoutParams(new ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    rootView.addView(overlayWebView);
     
                     overlayWebView.setWebViewClient(new WebViewClient() {
                         @Override
@@ -58,8 +57,17 @@ public class CordovaHTMLOverlay extends CordovaPlugin {
     
                     WebSettings webSettings = overlayWebView.getSettings();
                     webSettings.setJavaScriptEnabled(true);
+    
+                    // Load the HTML content
+                    overlayWebView.loadDataWithBaseURL(null, htmlStr, "text/html", "utf-8", null);
+                    
+                    rootView.addView(overlayWebView);
+                    overlayWebView.setVisibility(View.INVISIBLE); // Start with WebView invisible
+                } else {
+                    // WebView already exists, make it visible
+                    overlayWebView.setVisibility(View.VISIBLE);
+                    callbackContext.success();
                 }
-                overlayWebView.loadDataWithBaseURL(null, htmlStr, "text/html", "utf-8", null);
             }
         });
     }
