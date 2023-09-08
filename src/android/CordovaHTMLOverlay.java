@@ -49,12 +49,16 @@ public class CordovaHTMLOverlay extends CordovaPlugin {
                     overlayWebView.setWebViewClient(new WebViewClient() {
                         @Override
                         public void onPageFinished(WebView view, String url) {
-                            // Page has finished loading, make the overlay visible
-                            overlayWebView.setVisibility(View.VISIBLE);
-                            callbackContext.success();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    overlayWebView.setVisibility(View.VISIBLE);
+                                    callbackContext.success();
+                                }
+                            }, 100);
                         }
                     });
-    
+
                     WebSettings webSettings = overlayWebView.getSettings();
                     webSettings.setJavaScriptEnabled(true);
     
